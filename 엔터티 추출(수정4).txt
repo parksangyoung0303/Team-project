@@ -1,0 +1,156 @@
+엔터티 추출
+
+1-1) 사용자
+ 
+- 아이디
+- 닉네임
+- 비밀번호
+- 이메일
+- SNS 분류
+- SNS 아이디
+- 이름
+- 성별
+- 주소
+- 상세주소
+- 프로필 사진
+- 회원 등급
+
+
+1-2) user
+
+- user_id (PK NN UQ) : varchar(20)
+- user_nickname(NN) : varchar(50)
+- user_password(NN) : varchar(255)
+- user_email(NN UQ) : varchar(50)
+- join_type(NN) : varchar(6)
+- sns_id(UQ) : varchar(100)
+- name(NN) : varchar(15)
+- gender : varchar(5)
+- address(NN) : TEXT
+- detail_address(NN) : TEXT
+- profile_image : TEXT
+- user_level(NN) : INT
+
+2-1) 이메일 인증
+
+- 이메일
+- 이메일 인증 토큰
+- 인증 토큰 만료 여부
+- 인증 토큰 만료 시간
+
+2-2) email_auth
+
+- user_email (PK FK UQ NN) : varchar(50)
+- email_token (NN UQ)// 이메일 인증을 위한 고유 토큰 : TEXT
+- expired (NN) // 인증 토큰 만료 여부 : Boolean
+- expiration_time (NN) // 인증 토큰 만료 시간 : varchar(10)
+
+
+3-1) 게시글 기록
+
+- 게시글 번호
+- 작성자 아이디
+- 작성자 닉네임
+- 작성자 회원 등급
+- 게시글 내용
+- 게시글 제목
+- 게시글 지역 카테고리
+- 게시글 분야 카테고리
+- 게시글 작성 날짜
+- 게시글 기입 주소(작성자가 주소 검색해서 기입한 주소. 지역 카테고리와 속성이 같아야함.)
+- 조회수
+- 작성한 게시글의 총 점수 : 좋아요(count like) + 조회수 + 댓글 수(count comment) - 싫어요(count hate)
+
+3-2) board
+
+- board_number (PK AI NN UQ) : INT
+- user_id (FK NN) : varchar(20)
+- user_nickname (FK NN) : varchar(50)
+- user_level (FK NN) : INT
+- board_content(NN) : TEXT
+- board_title(NN) : TEXT
+- board_address_category(NN) : TEXT
+- board_detail_category(NN) : varchar(15)
+- board_writeDate(NN) : varchar(10)
+- board_address : TEXT
+- board_viewCount(NN) : INT
+- board_score(NN) : INT
+
+
+4-1) 마이페이지 기록
+
+- 아이디
+- 닉네임
+- 회원 등급
+- 작성한 게시글 번호
+- 계정 점수 : 작성한 총 게시글의 총합
+
+4-2) my_page
+
+- user_id (FK PK NN UQ) : varchar(20)
+- user_nickname (FK NN UQ) : varchar(50)
+- user_level (FK NN) : INT
+- board_number (FK NN) : INT
+- user_score (NN) : INT 
+
+
+5-1) 지도페이지 기록(게시판 완성 후 추후 추가 예정)
+
+- 출발지 주소
+- 도착지 주소
+
+5-2) map
+
+- start_address 
+- destination_address 
+
+
+6-1) 지역 행사 기록
+- 행사 날짜
+- 행사 이름
+- 행사 내용
+- 행사 이미지
+
+6-2) local_festival
+- festival_number (PK AI NN UQ) : INT
+- festival_date (NN) : varchar(10)
+- festival_name(NN) : TEXT
+- festival_content(NN) : TEXT
+- festival_image : TEXT
+
+7-1) 댓글
+
+- 댓글 번호
+- 댓글 내용
+- 작성자 아이디
+- 작성자 회원등급
+- 작성 날짜
+- 댓글을 작성한 게시글 번호
+
+7-2) comment
+
+- comment_number(PK AI UQ NN) : INT
+- comment_content (NN) : TEXT
+- user_id (FK NN) : varchar(20)
+- user_level (FK NN) : INT
+- write_date (NN) : varchar(10)
+- board_number (FK NN UQ) : INT
+
+8-1) 좋아요
+- 누른 사용자 아이디
+- 눌린 게시글 번호
+
+8-2) like
+- user_id(FK PK NN UQ) : varchar(20)
+- board_number(FK PK NN UQ) : INT 
+
+9-1) 싫어요
+- 누른 사용자 아이디
+- 눌린 게시글 번호
+
+9-2) hate
+- user_id(FK PK NN UQ) : varchar(20)
+- board_number(FK PK NN UQ) : INT
+
+
+
